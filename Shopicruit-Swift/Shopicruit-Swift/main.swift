@@ -54,17 +54,19 @@ if let url = getUrl(str: shopicruitUrl) {
     
     // MARK: Request
     let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-        print(error ?? "No errors 😀")
+        print(error ?? "No errors from request 😀")
         
-        if (response != nil) {
-            if let httpResponse = response as? HTTPURLResponse {
-                if (httpResponse.statusCode == 200) { // success call
-                    handleJSON(data: data!)
-                } else {
-                    print("oh, no! the shopicruit isn't working 😞")
-                }
-            }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Response object isn't a HTTPURLResponse type 😕")
+            return
         }
+        
+        guard httpResponse.statusCode == 200 else {
+            print("oh, no! the shopicruit isn't working 😞")
+            return
+        }
+        
+        handleJSON(data: data!)
         
         semaphore.signal()
     })
