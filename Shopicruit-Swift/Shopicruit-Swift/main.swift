@@ -38,13 +38,13 @@ func handleJSON(data: Data) {
         totalOrderRevenueUSD += price
     }
     
-    print("Total Order Revenue in CAD currency is \(totalOrderRevenueCAD)")
-    print("Total Order Revenue in USD currency is \(totalOrderRevenueUSD)")
+    print("Total Order Revenue in 🇨🇦 currency is \(totalOrderRevenueCAD)")
+    print("Total Order Revenue in 🇺🇸 currency is \(totalOrderRevenueUSD)")
     
     let exchangeRate = totalOrderRevenueCAD / totalOrderRevenueUSD
     let exchangeRateFormatted = String(format: "%.2f", exchangeRate)
     
-    print("The USD currency value by the day of this order was \(exchangeRateFormatted) CAD")
+    print("The 🇺🇸 currency value by the day of this order was \(exchangeRateFormatted) 🇨🇦")
 }
 
 if let url = getUrl(str: shopicruitUrl) {
@@ -54,12 +54,14 @@ if let url = getUrl(str: shopicruitUrl) {
     
     // MARK: Request
     let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-        print(error ?? "No errors :)")
+        print(error ?? "No errors 😀")
         
         if (response != nil) {
             if let httpResponse = response as? HTTPURLResponse {
                 if (httpResponse.statusCode == 200) { // success call
                     handleJSON(data: data!)
+                } else {
+                    print("oh, no! the shopicruit isn't working 😞")
                 }
             }
         }
